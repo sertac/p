@@ -1,0 +1,21 @@
+# Painless deployment with Travis CI.
+# Visit the docs at https://docs.travis-ci.com/
+
+sudo: false
+language: python
+python: 3.5
+
+env:
+  matrix:  # $ tox -l | xargs -I ARG echo '    - TOXENV=ARG'
+    - TOXENV=flake8
+    - TOXENV=py27
+    - TOXENV=py35
+
+install: pip install tox
+script: tox
+
+before_cache:
+  - rm -rf $HOME/.cache/pip/log
+cache:
+  directories:
+    - $HOME/.cache/pip
